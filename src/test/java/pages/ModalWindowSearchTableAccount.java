@@ -7,9 +7,9 @@ import org.openqa.selenium.support.How;
 
 import java.util.List;
 
-public class ModalWindowSearchTable extends Base {
+public class ModalWindowSearchTableAccount extends Base {
 
-    public ModalWindowSearchTable(WebDriver driver){
+    public ModalWindowSearchTableAccount(WebDriver driver){
         super(driver);
     }
 
@@ -33,7 +33,7 @@ public class ModalWindowSearchTable extends Base {
     private WebElement buttonFind;
 
     public void checkElementPage(String elemText) throws  InterruptedException{
-        checkElement(searchModalPage, elemText);
+        checkElementIgnoreCase(searchModalPage, elemText);
     }
 
     public void chooseOption1(String elemText){

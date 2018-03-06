@@ -3,12 +3,9 @@ package stepDefinition;
 import cucumber.api.DataTable;
 import cucumber.api.java.ru.Когда;
 import cucumber.api.java.ru.Тогда;
-import cucumber.api.java.ru.И;
 import org.junit.Assert;
 import pages.*;
 
-import javax.swing.*;
-import java.util.ArrayList;
 import java.util.List;
 
 import static stepDefinition.InitialSteps.*;
@@ -39,14 +36,21 @@ public class StepImplementation {
             page.GetInstance(LoginForm.class).clickButton(value);
         } else if (driver.getCurrentUrl().contains(page.GetInstance(ModalWindowChooseOrganization.class).getTitle())) {
             page.GetInstance(ModalWindowChooseOrganization.class).clickButton(value);
-        } else if (driver.getCurrentUrl().contains(page.GetInstance(ModalWindowSearchTable.class).getTitle())) {
-            page.GetInstance(ModalWindowSearchTable.class).clickButton(value);
         } else if (driver.getCurrentUrl().contains(page.GetInstance(AssetsList.class).getTitle())) {
             page.GetInstance(AssetsList.class).clickTopButton(value);
         } else if (driver.getCurrentUrl().contains(page.GetInstance(CreateAssetsStep1.class).getTitle())) {
             page.GetInstance(CreateAssetsStep1.class).clickNextButton(value);
-        } else if(driver.getCurrentUrl().contains(page.GetInstance(CreateAssetsStep2.class).getTitle())){
+        } else if (driver.getCurrentUrl().contains(page.GetInstance(CreateAssetsStep2.class).getTitle())) {
             page.GetInstance(CreateAssetsStep2.class).clickButton(value);
+        }
+    }
+
+    @Когда("^пользователь нажимает на кнопку \"([^\"]*)\"$")
+    public void clickOnButton(String value) throws Throwable{
+        if(driver.getCurrentUrl().contains(page.GetInstance(ModalWindowSearchTableAsset.class).getTitle())){
+            page.GetInstance(ModalWindowSearchTableAsset.class).clickButton(value);
+        } else if (driver.getCurrentUrl().contains(page.GetInstance(ModalWindowSearchTableAccount.class).getTitle())) {
+            page.GetInstance(ModalWindowSearchTableAccount.class).clickButton(value);
         }
     }
 
@@ -64,8 +68,8 @@ public class StepImplementation {
     public void openModalWindow(String modal) throws Throwable {
         if (driver.getCurrentUrl().contains(page.GetInstance(ModalWindowChooseOrganization.class).getTitle())) {
             page.GetInstance(ModalWindowChooseOrganization.class).checkElement(modal);
-        } else if (driver.getCurrentUrl().contains(page.GetInstance(ModalWindowSearchTable.class).getTitle())) {
-            page.GetInstance(ModalWindowSearchTable.class).checkElementPage(modal);
+        } else if (driver.getCurrentUrl().contains(page.GetInstance(ModalWindowSearchTableAccount.class).getTitle())) {
+            page.GetInstance(ModalWindowSearchTableAccount.class).checkElementPage(modal);
         }
     }
 
@@ -133,23 +137,27 @@ public class StepImplementation {
     }
 
     @Когда("^пользователь выбирает пункт \"([^\"]*)\" в выпадающем списке \"(Значимый актив|ID Плана Счетов)\"$")
-    public void chooseOption1(String value) throws Throwable {
-        page.GetInstance(ModalWindowSearchTable.class).chooseOption1(value);
+    public void chooseOption1(String value, String action) throws Throwable {
+        page.GetInstance(ModalWindowSearchTableAccount.class).chooseOption1(value);
     }
 
     @Когда("^пользователь выбирает пункт \"([^\"]*)\" в выпадающем списке \"(равно|содержит)\"$")
-    public void chooseOption2(String value) throws Throwable {
-        page.GetInstance(ModalWindowSearchTable.class).chooseOption2(value);
+    public void chooseOption2(String value, String action) throws Throwable {
+        page.GetInstance(ModalWindowSearchTableAccount.class).chooseOption2(value);
     }
 
     @Когда("^пользователь заполняет поле значением \"([^\"]*)\"$")
     public void inputFields(String value) throws Throwable {
-        page.GetInstance(ModalWindowSearchTable.class).inputValue(value);
+        page.GetInstance(ModalWindowSearchTableAccount.class).inputValue(value);
     }
 
-    @Тогда("^отображается \"Номер счёта 2-го порядка\" содержащий \"([^\"]*)\"$")
-    public void checkPresenceAccount(String value) throws Throwable {
-        page.GetInstance(AccountPlanCO.class).checkAccount(value);
+    @Тогда("^отображается \"(Номер счёта 2-го порядка|Номер лицевого счета)\" содержащий \"([^\"]*)\"$")
+    public void checkPresenceAccount(String action, String value) throws Throwable {
+        if(driver.getCurrentUrl().contains(page.GetInstance(AccountPlanCO.class).getTitle())){
+            page.GetInstance(AccountPlanCO.class).checkAccount(value);
+        }else if(driver.getCurrentUrl().contains(page.GetInstance(AssetsList.class).getTitle())){
+            page.GetInstance(AssetsList.class).checkAccount(value);
+        }
     }
 
     @Тогда("^на экранной форме присутствует поле \"([^\"]*)\"$")

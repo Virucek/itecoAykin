@@ -45,6 +45,12 @@ public class Base {
         Thread.sleep(2000);
     }
 
+    public void checkElementIgnoreCase(WebElement element, String elemText) throws InterruptedException {
+        waitUntilElementPresent(element, 30);
+        assertTrue(element.getText().equalsIgnoreCase(elemText));
+        Thread.sleep(2000);
+    }
+
     public void checkListOfElements(List<WebElement> elements, String elemText) throws InterruptedException{
         for(WebElement element: elements){
             waitUntilElementPresent(element, 10);

@@ -26,6 +26,9 @@ public class AssetsList extends Base{
     @FindBy(how = How.XPATH, using = "//td[@id='assetgrid_toppager_left']//td")
     private List<WebElement> tableButtons;
 
+    @FindBy(how = How.XPATH, using = "//td[@aria-describedby='assetgrid_accountNum']")
+    private List<WebElement> accounts;
+
      public void checkElementPage(String elemText) throws InterruptedException {
         checkElement(formTitle, elemText);
     }
@@ -37,4 +40,9 @@ public class AssetsList extends Base{
     public void clickOnTableButton(String elemText){
         clickElement(tableButtons, elemText);
     }
+
+    public void checkAccount(String elemText){
+        checkPresenceOfElements(accounts, elemText);
+    }
+
 }
